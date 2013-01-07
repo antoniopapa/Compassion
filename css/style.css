@@ -1,0 +1,68 @@
+html
+{
+	height: 100%;
+}
+body
+{
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+#map_canvas
+{
+	height: 100%;
+}
+#header
+{
+	height: 50px;
+	width: 100%;
+	background-color: #000000;
+}
+#zoomcontrol
+{
+	position: absolute;
+	top: 50%;
+	left: 30px;
+}
+
+.infobox-title
+{
+	padding: 0 !important;
+}
+
+.title
+{
+	background-color: black;
+	margin: 0;
+	padding: 5px;
+	color: white;
+}
+
+.info
+{
+	float: left;
+}
+
+.desc
+{
+	float: left;
+}
+
+.info-image
+{
+	float: left;
+	padding-right: 10px;
+	padding-bottom: 10px;
+	width: 100px;
+}
+
+.information
+{
+	list-style:	none;
+	padding: 0
+}
+
+.desc
+{
+	padding: 5px;
+}
