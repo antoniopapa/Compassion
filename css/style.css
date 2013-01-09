@@ -1,23 +1,26 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+
 html
 {
 	height: 100%;
 }
+
 body
 {
 	height: 100%;
 	margin: 0;
 	padding: 0;
 }
+
 #map_canvas
 {
 	height: 100%;
 }
-#header
-{
-	height: 50px;
-	width: 100%;
-	background-color: #000000;
-}
+
 #zoomcontrol
 {
 	position: absolute;
@@ -66,3 +69,51 @@ body
 {
 	padding: 5px;
 }
+
+#topmenu {
+ color:#00ff00;
+}
+
+header {
+    height: 50px;
+    background-color: #808080;
+}
+
+#NavButton {
+    background-color: #00ff00;
+    margin:10px;
+    height:20px;
+    width:50px;
+    position:relative;
+    padding:10px;
+}
+
+#MenuBubble {
+   position:absolute;
+   width:300px;
+   z-index:233;
+   background-color:#f2df6e;
+   margin:0px;
+   top:22px;
+}
+
+#BubbleCon {
+    margin:10px;
+    }
+
+#BubbleCon form {
+    padding:10px;
+    
+    }
+
+#BubbleCon input {      
+   margin-bottom: 5px;
+    }
+
+#BubbleCon label {
+    margin-top: 5px;
+    }
+
+    #BubbleCon p {
+        padding-left: 100px;
+    }
