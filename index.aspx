@@ -15,12 +15,26 @@
     <asp:ScriptManager runat="server" EnablePageMethods="True">
     </asp:ScriptManager>
     </form>
+    <div id ="sidebar">
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            $("#sidebar").animate({ left: "100%" }).fadeOut("Fast");
+        });
+
+        $(function () {
+            $("#NavButton").hover(function () {
+                $("#sidebar").fadeIn("Slow").animate({ left: "84%" });
+            }, function () {
+                $("#sidebar").animate({ left: "100%" }).fadeOut("Fast");
+            });
+        }); 
+    </script>
     <header>
-        <div id="NavButton">
-           <p>Logo</p>
+        <div id="NavButton">   
             <span id="MenuBubble">
                 <div id="BubbleCon" >
-                <form method="post" action="" >
+                <form method="post" action="/" >
                     <label>Username</label>
                     <br />
                     <input type="text" />

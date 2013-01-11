@@ -80,21 +80,23 @@ header {
 }
 
 #NavButton {
-    background-color: #00ff00;
+   
     margin:10px;
-    height:20px;
-    width:50px;
+    height:30px;
+    width:70px;
     position:relative;
     padding:10px;
+    background-color: #34b6ef;
 }
 
 #MenuBubble {
    position:absolute;
-   width:300px;
+   width:200px;
    z-index:233;
    background-color:#f2df6e;
    margin:0px;
    top:22px;
+   border-radius: 15px;
 }
 
 #BubbleCon {
@@ -103,11 +105,12 @@ header {
 
 #BubbleCon form {
     padding:10px;
-    
     }
 
 #BubbleCon input {      
-   margin-bottom: 5px;
+   margin-bottom: 10px;
+   padding-left:3px;
+   padding-right:3px;
     }
 
 #BubbleCon label {
@@ -117,3 +120,15 @@ header {
     #BubbleCon p {
         padding-left: 100px;
     }
+
+#sidebar {
+    z-index: 9;
+    position:absolute;
+    height:100%;
+    min-height:700px;
+    width:16%;;
+    float:none;
+    float:right; 
+    background-color: #34b6ef;
+    left:84%;
+}
