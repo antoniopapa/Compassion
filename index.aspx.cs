@@ -42,6 +42,18 @@ public partial class index : System.Web.UI.Page
         sql("DELETE FROM path;");
     }
 
+    [WebMethod]
+    public static string getImages(string id)
+    {
+        return sql(String.Format("SELECT * FROM images WHERE person_id = {0}", id)).GetXml();
+    }
+
+    [WebMethod]
+    public static string getVideos(string id)
+    {
+        return sql(String.Format("SELECT * FROM video WHERE person_id = {0}", id)).GetXml();
+    }
+
     public static string Serialize<T>(T obj)
     {
         DataContractJsonSerializer serializer = new DataContractJsonSerializer(obj.GetType());
