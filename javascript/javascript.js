@@ -1,5 +1,6 @@
 $(document).ready(function () {
 
+    var credentials = "AkBI3eBjLpCZE74qrT44B-tAET626SDzR2q6aE19mkGNpg_7EQF6oDsNRrkA5qVN";
     var minZoomLevel = 2;
     var maxZoomLevel = 10;
     var container;
@@ -13,21 +14,17 @@ $(document).ready(function () {
     var path;
     var points = [];
     var people = [];
-    var pinInfoBox;
     var pointId = [];
-    var credentials = "AkBI3eBjLpCZE74qrT44B-tAET626SDzR2q6aE19mkGNpg_7EQF6oDsNRrkA5qVN";
     var pathId = 0;
     var donePath = false;
-    var personDetails = [];
-    var imageDetails = [];
-    var videoDetails = [];
+    var causeDetails = [];
 
     container = document.getElementById('mapDiv');
     var myOptions = {
         credentials: credentials,
-        center: new Microsoft.Maps.Location(0, 0),
+        center: new Microsoft.Maps.Location(41.0092, 20.0194),
         mapTypeId: Microsoft.Maps.MapTypeId.birdseye,
-        zoom: minZoomLevel,
+        zoom: 2,
         showCopyright: false,
         showDashboard: true,
         showMapTypeSelector: false,
@@ -35,9 +32,6 @@ $(document).ready(function () {
         fixedMapPosition: true
     }
     map = new Microsoft.Maps.Map(container, myOptions);
-
-    pinInfobox = new Microsoft.Maps.Infobox(new Microsoft.Maps.Location(0, 0), { visible: false });
-    map.entities.push(pinInfobox);
 
     Microsoft.Maps.Events.addHandler(map, "mousemove", function (e) {
         var mapElem = map.getRootElement();
@@ -48,7 +42,7 @@ $(document).ready(function () {
         }
     });
 
-    navigator.geolocation.getCurrentPosition(function () {
+    navigator.geolocation.getCurrentPosition(function (pos) {
         position = pos.coords;
     });
 
@@ -56,175 +50,85 @@ $(document).ready(function () {
     window.setInterval(function () { getAllPeople(); }, 1000);
 
     function getAllPeople() {
-        PageMethods.getAllPersonsAsXml(function (response) {
-            if (response != '<NewDataSet />') {
-                var xml = StringtoXML(response);
-                var id = getData(xml, 'id');
-                if (personDetails.length != id.length) {
-                    for (var i = 0; i < id.length; i++) {
-                        if ($.inArray(id[i], personDetails) == -1) {
-                            personDetails[id[i]] = [];
-                            personDetails[id[i]]["latitude"] = getOneElement(xml, 'latitude', i);
-                            personDetails[id[i]]["longitude"] = getOneElement(xml, 'longitude', i);
-                            personDetails[id[i]]["description"] = getOneElement(xml, 'description', i);
-                            personDetails[id[i]]["city"] = getOneElement(xml, 'city', i);
-                            personDetails[id[i]]["state"] = getOneElement(xml, 'state', i);
-                            personDetails[id[i]]["name"] = getOneElement(xml, 'name', i);
-                            personDetails[id[i]]["surname"] = getOneElement(xml, 'surname', i);
-                            personDetails[id[i]]["age"] = getOneElement(xml, 'age', i);
-                            var pin = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(personDetails[id[i]]["latitude"], personDetails[id[i]]["longitude"]));
-                            map.entities.push(pin);
-                            addListener(pin, id[i]);
+        try {
+            PageMethods.getCauses(function (response) {
+                if (response != '<NewDataSet />') {
+                    var xml = StringtoXML(response);
+                    var id = getData(xml, 'id');
+                    if (causeDetails.length != id.length) {
+                        for (var i = 0; i < id.length; i++) {
+                            if ($.inArray(id[i], causeDetails) == -1) {
+                                causeDetails[id[i]] = [];
+                                causeDetails[id[i]]["latitude"] = getOneElement(xml, 'latitude', i);
+                                causeDetails[id[i]]["longitude"] = getOneElement(xml, 'longitude', i);
+                                causeDetails[id[i]]["description"] = getOneElement(xml, 'description', i);
+                                causeDetails[id[i]]["title"] = getOneElement(xml, 'title', i);
+                                causeDetails[id[i]]["name"] = getOneElement(xml, 'name', i);
+                                var pin = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(causeDetails[id[i]]["latitude"], causeDetails[id[i]]["longitude"]));
+                                map.entities.push(pin);
+                                addListener(pin, id[i]);
+                            }
                         }
                     }
                 }
-            }
-        });
+            });
+        } catch (e) {
+            alert(e);
+        }
     }
 
     function addListener(pin, id) {
         Microsoft.Maps.Events.addHandler(pin, 'click', function (e) {
-            PageMethods.getImages(id, function (imagesResult) {
-                if (imagesResult != '<NewDataSet />') {
-                    var xmlImages = StringtoXML(imagesResult);
-                    var imageId = getData(xmlImages, 'id');
-                    if (imageDetails.length != imageId.length) {
-                        for (var i = 0; i < imageId.length; i++) {
-                            if ($.inArray(imageId[i], imageDetails) == -1) {
-                                imageDetails[imageId[i]] = [];
-                                imageDetails[imageId[i]]['person_id'] = getOneElement(xmlImages, 'person_id', i);
-                                imageDetails[imageId[i]]['profile'] = getOneElement(xmlImages, 'profile', i);
-                                imageDetails[imageId[i]]['name'] = getOneElement(xmlImages, 'name', i);
-                                imageDetails[imageId[i]]['path'] = getOneElement(xmlImages, 'path', i);
-                            }
-                        }
-                    }
-                }
-            });
-            PageMethods.getVideos(id, function (videosResult) {
-                if (videosResult != '<NewDataSet />') {
-                    var xmlVideos = StringtoXML(videosResult);
-                    var videosId = getData(xmlVideos, 'id');
-                    if (videoDetails.length != videosId.length) {
-                        for (var i = 0; i < videosId.length; i++) {
-                            if ($.inArray(videosId[i], videoDetails) == -1) {
-                                videoDetails[videosId[i]] = [];
-                                videoDetails[videosId[i]]['person_id'] = getOneElement(xmlVideos, 'person_id', i);
-                                videoDetails[videosId[i]]['name'] = getOneElement(xmlVideos, 'name', i);
-                                videoDetails[videosId[i]]['url'] = getOneElement(xmlVideos, 'url', i);
-                            }
-                        }
-                    }
-                }
-            });
 
-            displayInfobox(e, id);
-        });
-    }
-
-    function getProfilePicture(personId) {
-        for (var i in imageDetails) {
-            if (imageDetails[i]['person_id'] == personId && imageDetails[i]['profile'] == 1) {
-                return imageDetails[i]['path'] + imageDetails[i]['name'];
+            try {
+                PageMethods.getImages(id, function (imagePath) {
+                    causeDetails[id]["image_path"] = imagePath;
+                });
+            } catch (e) {
+                alert(e);
             }
-        }
-        return 'images/poor.jpg';
-    }
 
-    function getHiddenUl(personId) {
-        var str = '<ul style="display:none">';
-        for (var i in imageDetails) {
-            if (imageDetails[i]['person_id'] == personId) {
-                var path = imageDetails[i]['path'] + imageDetails[i]['name'];
-                str += '<li>' +
-                        '<a class="gallery" href="' + path + '">' +
-                            '<img src="' + path + '" width="72" height="72" alt="' + path + '" />' +
-                        '</a>' +
-                    '</li>';
-            }
-        }
-        str += '</ul>';
-        return str;
-    }
+            var location = new Microsoft.Maps.Location(causeDetails[id]["latitude"], causeDetails[id]["longitude"]);
 
-    function getVideos(personId) {
-        var str = '';
-        for (var i in videoDetails) {
-            str += '<iframe width="420" height="315" src="' + videoDetails[i]['url'] + '" frameborder="0" allowfullscreen></iframe>';
-        }
-        return str;
-    }
+            setTimeout(function () {
+                var infoboxOptions = 
+                {
+                    width: 400,
+                    height: 200,
+                    description: '<div>' +
+                                    '<div class="info">' +
+                                        '<img src="' + causeDetails[id]["image_path"] + '" class="info-image" alt="">' +
+                                    '</div>' +
+                                    '<div class="desc">' +
+                                        '<h3>' + causeDetails[id]["title"] + ' by ' + causeDetails[id]["name"] + '</h3>' +
+                                            causeDetails[id]["description"] +
+                                            '<a href="profile.html?causeId="' + id + '">Read More</a>' +
+                                    '</div>' +
+                                '</div>'
+                    ,
+                    zIndex: 2,
+                    visible: true,
+                    offset: new Microsoft.Maps.Point(0, 25)
+                }
 
-    function putPeople() {
-        for (var i = 0; i < people.length; i++) {
-            map.entities.push(people[i]);
-        }
-    }
-
-    function emptyPeople() {
-        for (var i = 0; i < people.length; i++) {
-            map.entities.remove(people[i]);
-        }
-    }
-
-    function displayInfobox(e, id) {
-        var profilePath = getProfilePicture(id);
-        var location = e.target.getLocation();
-        pinInfobox.setOptions(
-        {
-            width: 800,
-            height: 450,
-            description: '<div>' +
-                            '<div class="info">' +
-                                '<div class="image-container">' +
-                                    '<a href="' + profilePath + '" class="light-box gallery">' +
-                                        '<img  class="info-image gallery" src="' + profilePath + '" alt="' + profilePath + '">' +
-                                        '<div class="clearfix view-all">View All</div>' +
-                                    '</a>' +
-                                    getHiddenUl(id) +
-                                '</div>' +
-                                '<div class="person-info">' +
-                                    '<h4>Basic Info</h4>' +
-                                    '<ul class="information">' +
-                                        '<li><b>Name</b>: ' + personDetails[id]["name"] + personDetails[id]["surname"] + '</li>' +
-                                        '<li><b>Age</b>: ' + personDetails[id]["age"] + ' </li>' +
-                                        '<li><b>City</b>: ' + personDetails[id]["city"] + '</li>' +
-                                        '<li><b>Country</b>: ' + personDetails[id]["country"] + '</li>' +
-                                        '<li><b>Needs</b>: 50000$</li>' +
-                                    '</ul>' +
-                                '</div>' +
-                            '</div>' +
-                            '<div class="desc">' +
-                                '<h3>' + personDetails[id]["name"] + '\'s Story</h3>' +
-                                personDetails[id]["description"] +
-                                getVideos(id) +
-                            '</div>' +
-                        '</div>'
-            ,
-            zIndex: 2,
-            visible: true,
-            offset: new Microsoft.Maps.Point(0, 25)
+                pinInfobox = new Microsoft.Maps.Infobox(location, infoboxOptions);
+                map.entities.push(pinInfobox);
+                map.setView({ center: location });
+            }, 180);
         });
-        pinInfobox.setLocation(location);
-
-        map.setView({ center: new Microsoft.Maps.Location(location.latitude, location.longitude) });
-    }
-
-    function hideInfobox(e) {
-        pinInfobox.setOptions({ visible: false });
     }
 
     function checkDonations() {
-        PageMethods.getPathAsXml(function (response) {
+        PageMethods.getLastContribute(function (response) {
             if (response != '<NewDataSet />') {
                 var resultXML = StringtoXML(response);
                 var id = getOneElement(resultXML, 'id', 0);
                 if (id != pathId) {
                     pathId = id;
-                    var slat = getData(resultXML, 'start_lat');
-                    var slong = getData(resultXML, 'start_long');
-                    var elat = getData(resultXML, 'end_lat');
-                    var elong = getData(resultXML, 'end_long');
+                    var slat = getData(resultXML, 'user_id');
+                    var slong = getData(resultXML, 'cause_id');
+                    var elat = getData(resultXML, 'contribute');
+                    var elong = getData(resultXML, 'date');
                     for (var i = 0; i < slat.length; i++) {
                         endPoints.push({ start: new Microsoft.Maps.Location(slat[i], slong[i]), end: new Microsoft.Maps.Location(elat[i], elong[i]) });
                     }
@@ -290,26 +194,41 @@ $(document).ready(function () {
     }
 
     function getData(xml, name) {
-        var ret = [];
-        var x = xml.getElementsByTagName(name);
-        for (var i = 0; i < x.length; i++) {
-            ret.push(x[i].childNodes[0].nodeValue);
+        try {
+            var ret = [];
+            var x = xml.getElementsByTagName(name);
+            for (var i = 0; i < x.length; i++) {
+                ret.push(x[i].childNodes[0].nodeValue);
+            }
+            return ret;
+        } catch (e) {
+            alert(e);
+            alert('name:' + name);
         }
-        return ret;
     }
 
     function getIndexId(xml, id) {
-        var x = xml.getElementsByTagName(name);
-        for (var i = 0; i < x.length; i++) {
-            if (x[i] == id) {
-                return i;
+        try {
+            var x = xml.getElementsByTagName(name);
+            for (var i = 0; i < x.length; i++) {
+                if (x[i] == id) {
+                    return i;
+                }
             }
+        } catch (e) {
+            alert(e);
+            alert('id:' + id);
         }
     }
 
     function getOneElement(xml, name, index) {
-        var x = xml.getElementsByTagName(name);
-        return x[index].childNodes[0].nodeValue;
+        try {
+            var x = xml.getElementsByTagName(name);
+            return x[index].childNodes[0].nodeValue;
+        } catch (e) {
+            alert(e);
+            alert("name:" + name + " index:" + index);
+        }
     }
 
     function StringtoXML(text) {

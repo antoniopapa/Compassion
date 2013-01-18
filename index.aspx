@@ -43,11 +43,8 @@
 </body>
 <script type="text/javascript" src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0"></script>
 <script src="javascript/jquery-1.8.3.min.js"></script>
-<script src="javascript/jquery.livequery.js" type="text/javascript"></script>
-<script src="javascript/jquery.lightbox-0.5.pack.js"></script>
 <script type="text/javascript" src="javascript/javascript.js"></script>
 <script>
-    $('a.gallery').live('mouseover', function () { $('a.gallery').lightBox(); });
     $(function () {
         $("#sidebar").animate({ left: "100%" }).fadeOut("Fast");
     });
