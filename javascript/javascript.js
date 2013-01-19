@@ -52,8 +52,8 @@ $(document).ready(function () {
     });*/
     navigator.geolocation.getCurrentPosition(success, error);
 
-    window.setInterval(function () { checkDonations(); }, 1000);
-    window.setInterval(function () { getAllPeople(); }, 1000);
+    window.setInterval(function () { checkDonations(); }, 5000);
+    window.setInterval(function () { getAllPeople(); }, 5000);
 
     function getAllPeople() {
         PageMethods.getAllPersonsAsXml(function (response) {
@@ -90,7 +90,7 @@ $(document).ready(function () {
             }
         },
         function () {
-            alert('error occured');
+          //  alert('error occured');
         });
     }
 
@@ -168,7 +168,7 @@ $(document).ready(function () {
                 }
             }
         }, function () {
-            alert('error creating path');
+          //  alert('error creating path');
         });
         if (endPoints.length != 0 && !donating) {
             nextRoute();
@@ -180,7 +180,7 @@ $(document).ready(function () {
     }
 
     function error() {
-        alert('Coul not get your location!');
+      //  alert('Coul not get your location!');
     }
 
     function nextRoute() {

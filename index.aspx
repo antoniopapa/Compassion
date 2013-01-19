@@ -9,6 +9,7 @@
     <script type="text/javascript" src="javascript/jquery-1.8.3.min.js"></script>
     <script type="text/javascript" src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0"></script>
     <script type="text/javascript" src="javascript/javascript.js"></script>
+    <script type="text/javascript" src="javascript/navigation.js"></script>
 </head>
 <body>
     <form id="form" runat="server">
@@ -16,19 +17,63 @@
     </asp:ScriptManager>
     </form>
     <div id ="sidebar">
+        <form id="form-search" >
+            <div id="search-box">
+                <input type="text" id="input-search" />
+                <input type="button" id="button-search" />
+            </div>
+        </form>
+        <div id="sidebar-menu" >
+            <div class="menu-item" id="item-data" >
+                <img src="imgs/icons/Data.png" />
+                <span>Data List</span>
+            </div>
+            <div class="menu-item" id="item-login">
+                <img src="imgs/icons/Login3.png" />
+                <span>Log in</span>
+            </div>
+            <div class="menu-item" id="item-about">
+                <img src="imgs/icons/About.png" />
+                <span>About</span>
+            </div>
+            <div class="menu-item" id="item-bug" >
+                <img src="imgs/icons/Ant.png" />
+                <span>Report bug</span>
+            </div>
+        </div>
+        
     </div>
     <script type="text/javascript">
-        $(function () {
-            $("#sidebar").animate({ left: "100%" }).fadeOut("Fast");
-        });
+    //    $(function () {
+     //       $("#testtext").click(function () {
+       //      
+         //       $.get('pages/testajax.aspx', function (data) {
+           //         alert(data);
+            //    });
+           // });
+       // });
 
         $(function () {
-            $("#NavButton").hover(function () {
-                $("#sidebar").fadeIn("Slow").animate({ left: "84%" });
-            }, function () {
-                $("#sidebar").animate({ left: "100%" }).fadeOut("Fast");
+
+            $("#loader").hide();
+
+            $("#testtext").click(function () {
+
+                $("#loader").show();
+                
+                $.ajax({
+                    url: "/pages/testajax.aspx",
+                }).done(function (data) {
+                    data = $(data).find("#xxt");
+                    $(this).delay(4000);
+                    $("#loader").hide();
+                    alert(data);
+                });
+
             });
-        }); 
+        });
+
+    
     </script>
     <header>
         <div id="NavButton">   

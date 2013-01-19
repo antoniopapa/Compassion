@@ -87,6 +87,7 @@ header {
     position:relative;
     padding:10px;
     background-color: #34b6ef;
+    z-index:233;
 }
 
 #MenuBubble {
@@ -121,14 +122,99 @@ header {
         padding-left: 100px;
     }
 
+
 #sidebar {
-    z-index: 9;
+    z-index: 3;
     position:absolute;
     height:100%;
     min-height:700px;
-    width:16%;;
+    min-width:300px;
+    
     float:none;
-    float:right; 
-    background-color: #34b6ef;
-    left:84%;
+  /*  background-image: url("/images/shade.png");
+    background-repeat: repeat; */
+    background: rgba(0, 0, 0, 0.4);
+    left:100%;
 }
+
+html {
+    overflow-x: hidden;
+}
+
+#searchform {
+    margin-left:47px;
+    margin-top:70px;
+}
+
+
+
+#form-search {
+    width:100%;
+    position:absolute;
+    left:30px;
+    top:70px;
+}
+
+#form-search #search-box {
+
+        background-color: white;
+}
+
+    #form-search #input-search {
+        height:40px;
+        width:230px;
+        border: none;
+        float:left;
+        font-size: 20px;
+        border-color: white;
+        padding-left:10px;
+        padding-right:50px;
+        
+    }
+
+#input-search:focus {
+    border-color: white
+}
+#input-search:active {
+    border-color: white
+}
+
+
+    #form-search #button-search {
+        background: #f00 url("/imgs/icons/Compassion.png");
+        background-size: 36px , 36px;
+        width: 36px;
+        height : 36px;
+        position: absolute;
+        left: 250px;
+        top: 2px;
+        border:none;
+    }
+
+#sidebar-menu {
+    width: 100%;
+    float:left;
+    top:130px;
+    position:absolute;
+}
+
+.menu-item {
+    padding:10px;
+    height:50px;
+    cursor: pointer;
+}
+
+.menu-item img {
+    width:40px;
+    height:40px;
+    margin-top:4px;
+    float:left;
+}
+
+    .menu-item span {
+        color: white;
+        font-size: 24px;
+        top:15px;
+        padding:15px;
+
+    }
