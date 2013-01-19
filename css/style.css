@@ -160,7 +160,7 @@ html {
         background-color: white;
 }
 
-    #form-search #input-search {
+.input-metro {
         height:40px;
         width:230px;
         border: none;
@@ -168,19 +168,10 @@ html {
         font-size: 20px;
         border-color: white;
         padding-left:10px;
-        padding-right:50px;
-        
+        padding-right:50px;      
     }
 
-#input-search:focus {
-    border-color: white
-}
-#input-search:active {
-    border-color: white
-}
-
-
-    #form-search #button-search {
+ .button-metro {
         background: #f00 url("/imgs/icons/Compassion.png");
         background-size: 36px , 36px;
         width: 36px;
@@ -189,7 +180,7 @@ html {
         left: 250px;
         top: 2px;
         border:none;
-    }
+   }
 
 #sidebar-menu {
     width: 100%;
@@ -204,10 +195,27 @@ html {
     cursor: pointer;
 }
 
+
+.sub-menu {
+    padding-left:10px;
+}
+
+.sub-menu-item {
+    height:30px;
+    cursor: pointer;
+}
+
 .menu-item img {
     width:40px;
     height:40px;
     margin-top:4px;
+    float:left;
+}
+
+.sub-menu-item  img{
+    margin-top:4px;
+    width:20px;
+    height:20px;
     float:left;
 }
 
@@ -218,3 +226,25 @@ html {
         padding:15px;
 
     }
+
+#header {
+    background-color: #00ff00;
+    height: 150px;
+    width: 100%;
+}
+
+#content {
+   height:80%;
+   min-height:400px;
+   background-color:#808080;
+}
+
+#container {
+    height:700px;
+    background-color:#f2df6e;
+}
+
+#mapDiv {
+   height:100%;
+   position:absolute;
+}

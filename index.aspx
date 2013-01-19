@@ -10,19 +10,25 @@
     <script type="text/javascript" src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0"></script>
     <script type="text/javascript" src="javascript/javascript.js"></script>
     <script type="text/javascript" src="javascript/navigation.js"></script>
+    <script type="text/javascript" src="javascript/jquery-ui-1.10.0.custom.min.js"></script>
 </head>
+
 <body>
+
     <form id="form" runat="server">
     <asp:ScriptManager runat="server" EnablePageMethods="True">
     </asp:ScriptManager>
     </form>
+
     <div id ="sidebar">
+
         <form id="form-search" >
             <div id="search-box">
-                <input type="text" id="input-search" />
-                <input type="button" id="button-search" />
+                <input type="text" class="input-metro"  />
+                <input type="button" class="button-metro" />
             </div>
         </form>
+
         <div id="sidebar-menu" >
             <div class="menu-item" id="item-data" >
                 <img src="imgs/icons/Data.png" />
@@ -40,82 +46,22 @@
                 <img src="imgs/icons/Ant.png" />
                 <span>Report bug</span>
             </div>
-        </div>
-        
-    </div>
-    <script type="text/javascript">
-    //    $(function () {
-     //       $("#testtext").click(function () {
-       //      
-         //       $.get('pages/testajax.aspx', function (data) {
-           //         alert(data);
-            //    });
-           // });
-       // });
-
-        $(function () {
-
-            $("#loader").hide();
-
-            $("#testtext").click(function () {
-
-                $("#loader").show();
-                
-                $.ajax({
-                    url: "/pages/testajax.aspx",
-                }).done(function (data) {
-                    data = $(data).find("#xxt");
-                    $(this).delay(4000);
-                    $("#loader").hide();
-                    alert(data);
-                });
-
-            });
-        });
-
-    
-    </script>
-    <header>
-        <div id="NavButton">   
-            <span id="MenuBubble">
-                <div id="BubbleCon" >
-                <form method="post" action="/" >
-                    <label>Username</label>
-                    <br />
-                    <input type="text" />
-                    <br />
-                    <label>Password</label>
-                    <br />
-                    <input type="password"/>
-                    <br />
-                    <input type="submit" value="Log in"/> or Register
-                </form>
-                    <br />
-                 <p>About Us</p>
-                </div>
-            </span>
+            <div class="menu-item" id="item-banner" >
+                <img src="imgs/icons/Banner.png" />
+                <span>Causes</span>
+            </div>
         </div>  
-    </header>
-    <script type="text/javascript">
-     $(function () {
-         $("#MenuBubble").fadeOut("Slow");
-     });
-     $(function () {
-         $("#NavButton").hover(function () {
-             $("#MenuBubble").fadeIn("Slow");
-         }, function () {
-             $("#MenuBubble").fadeOut("Fast");
-         });
-     });
-    </script>
-    <div id="mapDiv" style="position: relative; width: 100%; height: 100%;">
+         
     </div>
-    <div style="width: 200px; height: 200px; position: absolute; bottom: 0; right: 0;
-        z-index: 999; background-color: White;">
-        <h2>
-            Komentet:</h2>
-        Tani nese shtyp donate do te shikohet zemra nga te gjithe perdoruesit.
+
+    <div id="container" >
+
+        <div id="header" >
+        </div>
+
+        <div id ="content" >
+            <div id="mapDiv" style="position: relative; width: 100%; height: 100%;"> </div>    
+        </div>
     </div>
-   
 </body>
 </html>

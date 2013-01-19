@@ -63,3 +63,22 @@ createItem("#item-data", "#090", "#0F0");
 createItem("#item-bug", "#900", "#F00");
 createItem("#item-about", "#777", "#ccc");
 createItem("#item-login", "#479", "#58f");
+createItem("#item-banner", "#990", "#bb0");
+createItem("#item-add", "#990", "#bb0");
+createItem("#item-delete", "#099", "#0aa");
+
+$(function () {
+
+    $("#item-about-sub").hide();
+
+    $("#item-about").click(function () {
+        $("#item-about-sub").slideDown();
+        $("item-about").css("background-color", "#777");
+    });
+
+    $("#item-login").click(function () {
+        $("#content").load("/pages/login.aspx");
+        alert("sdfs");
+    });
+
+});
