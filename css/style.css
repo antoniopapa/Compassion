@@ -1,23 +1,26 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+
 html
 {
 	height: 100%;
 }
+
 body
 {
 	height: 100%;
 	margin: 0;
 	padding: 0;
 }
+
 #map_canvas
 {
 	height: 100%;
 }
-#header
-{
-	height: 50px;
-	width: 100%;
-	background-color: #000000;
-}
+
 #zoomcontrol
 {
 	position: absolute;
@@ -46,12 +49,6 @@ body
 .desc
 {
 	float: left;
-	font-size: 10
-}
-
-.desc h3
-{
-	font-size: 16px;
 }
 
 .info-image
@@ -59,45 +56,18 @@ body
 	float: left;
 	padding-right: 10px;
 	padding-bottom: 10px;
-	max-width: 150px;
-	max-height: 150px;
-}
-
-.clearfix
-{
-	clear: both;
-}
-
-.info
-{
-	width: 150px;
-	height: 100%;
-}
-
-.image-container
-{
-	width: 100%;
-	text-align: center;
-}
-
-.person-info
-{
-	width: 100%;
-	background-color: #dddddd;
-	margin-top: 20px;	
+	width: 100px;
 }
 
 .information
 {
-	list-style: none;
-	padding: 0;
+	list-style:	none;
+	padding: 0
 }
 
-.person-info h4
+.desc
 {
-	background-color: #cccccc;
-	border-bottom: 1px solid black;	
-	text-align: center;
+	padding: 5px;
 }
 
 #topmenu {
@@ -117,6 +87,7 @@ header {
     position:relative;
     padding:10px;
     background-color: #34b6ef;
+    z-index:233;
 }
 
 #MenuBubble {
@@ -151,14 +122,129 @@ header {
         padding-left: 100px;
     }
 
+
 #sidebar {
-    z-index: 9;
+    z-index: 3;
     position:absolute;
     height:100%;
     min-height:700px;
-    width:16%;;
+    min-width:300px;
+    
     float:none;
-    float:right; 
-    background-color: #34b6ef;
-    left:84%;
+  /*  background-image: url("/images/shade.png");
+    background-repeat: repeat; */
+    background: rgba(0, 0, 0, 0.4);
+    left:100%;
+}
+
+html {
+    overflow-x: hidden;
+}
+
+#searchform {
+    margin-left:47px;
+    margin-top:70px;
+}
+
+
+
+#form-search {
+    width:100%;
+    position:absolute;
+    left:30px;
+    top:70px;
+}
+
+#form-search #search-box {
+
+        background-color: white;
+}
+
+.input-metro {
+        height:40px;
+        width:230px;
+        border: none;
+        float:left;
+        font-size: 20px;
+        border-color: white;
+        padding-left:10px;
+        padding-right:50px;      
+    }
+
+ .button-metro {
+        background: #f00 url("/imgs/icons/Compassion.png");
+        background-size: 36px , 36px;
+        width: 36px;
+        height : 36px;
+        position: absolute;
+        left: 250px;
+        top: 2px;
+        border:none;
+   }
+
+#sidebar-menu {
+    width: 100%;
+    float:left;
+    top:130px;
+    position:absolute;
+}
+
+.menu-item {
+    padding:10px;
+    height:50px;
+    cursor: pointer;
+}
+
+
+.sub-menu {
+    padding-left:10px;
+}
+
+.sub-menu-item {
+    height:30px;
+    cursor: pointer;
+}
+
+.menu-item img {
+    width:40px;
+    height:40px;
+    margin-top:4px;
+    float:left;
+}
+
+.sub-menu-item  img{
+    margin-top:4px;
+    width:20px;
+    height:20px;
+    float:left;
+}
+
+    .menu-item span {
+        color: white;
+        font-size: 24px;
+        top:15px;
+        padding:15px;
+
+    }
+
+#header {
+    background-color: #00ff00;
+    height: 150px;
+    width: 100%;
+}
+
+#content {
+   height:80%;
+   min-height:400px;
+   background-color:#808080;
+}
+
+#container {
+    height:700px;
+    background-color:#f2df6e;
+}
+
+#mapDiv {
+   height:100%;
+   position:absolute;
 }

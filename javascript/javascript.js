@@ -91,7 +91,7 @@ $(document).ready(function () {
             var location = new Microsoft.Maps.Location(causeDetails[id]["latitude"], causeDetails[id]["longitude"]);
 
             setTimeout(function () {
-                var infoboxOptions = 
+                var infoboxOptions =
                 {
                     width: 400,
                     height: 200,
