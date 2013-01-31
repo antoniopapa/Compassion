@@ -14,7 +14,7 @@ public partial class index : System.Web.UI.Page
     [WebMethod]
     public static string getLastContribute()
     {
-        return Contributes.getLastContribute().GetXml();
+        return Contributions.getLastContributeAsDataset().GetXml();
     }
 
     [WebMethod]
@@ -26,7 +26,13 @@ public partial class index : System.Web.UI.Page
     [WebMethod]
     public static string getCauses()
     {
-        return Causes.getShortDescriptionCauses().GetXml();
+        return Causes.getMapCauses().GetXml();
+    }
+
+    [WebMethod]
+    public static string getSearchCauses(string search)
+    {
+        return Causes.getShortDescriptionCausesBySearch(search).GetXml();
     }
 
 }

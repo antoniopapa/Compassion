@@ -26,7 +26,7 @@ public class Tags : DatabaseObject
 
     public void update()
     {
-        update(String.Format("UPDATE tags SET tag = '{1}' WHERE id = '{0}'", Id, Tag));
+        update(String.Format("UPDATE tags SET name = '{1}' WHERE id = '{0}'", Id, Tag));
     }
 
     public void delete()
@@ -39,11 +39,14 @@ public class Tags : DatabaseObject
         return query("SELECT * FROM tags");
     }
 
-    public static DataSet loadById(int id)
+    public static DataSet loadDataSetById(int id)
     {
-        DataSet ds = query(String.Format("SELECT * FROM tags WHERE id = '{0}'", id));
-        instantiate(ds);
-        return ds;
+       return query(String.Format("SELECT * FROM tags WHERE id = '{0}'", id));
+    }
+
+    public static Tags loadObjectById(int id)
+    {
+        return instantiate(query(String.Format("SELECT * FROM tags WHERE id = '{0}'", id)));
     }
 
     public static int countAll()

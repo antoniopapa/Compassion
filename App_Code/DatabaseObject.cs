@@ -13,6 +13,8 @@ using System.Reflection;
 public class DatabaseObject
 {
     private static string connectionString = ConfigurationManager.ConnectionStrings["connection"].ConnectionString;
+    //private static string connectionString = "workstation id=WorldOfLove.mssql.somee.com;packet size=4096;user id=antoniopapa91_SQLLogin_1;pwd=1xuot8va3j;data source=WorldOfLove.mssql.somee.com;persist security info=False;initial catalog=WorldOfLove";
+
 
     public DatabaseObject() { }
 
@@ -40,7 +42,7 @@ public class DatabaseObject
             }
         }
     }
-
+   
     public static bool update(string sql)
     {
         using (SqlConnection connection = new SqlConnection(connectionString))

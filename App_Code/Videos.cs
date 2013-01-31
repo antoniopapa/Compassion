@@ -27,38 +27,41 @@ public class Videos : DatabaseObject
 
     public void insert()
     {
-        insert(String.Format("INSERT INTO videos VALUES ('{0}', '{1}', '{2}', '{3}')", CauseId, Name, Url, Date));
+        insert(String.Format("INSERT INTO video VALUES ('{0}', '{1}', '{2}', '{3}')", CauseId, Name, Url, Date));
     }
 
     public void update()
     {
-        update(String.Format("UPDATE videos SET cause_id = '{1}', name = '{2}', url = '{3}', date = '{4}' WHERE id = '{0}'", Id, CauseId, Name, Url, Date));
+        update(String.Format("UPDATE video SET cause_id = '{1}', name = '{2}', url = '{3}', date = '{4}' WHERE id = '{0}'", Id, CauseId, Name, Url, Date));
     }
 
     public void delete()
     {
-        update(String.Format("DELETE FROM videos WHERE id = '{0}'", Id));
+        update(String.Format("DELETE FROM video WHERE id = '{0}'", Id));
     }
 
     public static DataSet loadAll()
     {
-        return query("SELECT * FROM videos");
+        return query("SELECT * FROM video");
     }
 
-    public static DataSet loadById(int id)
+    public static DataSet loadDataSetById(int id)
     {
-        DataSet ds = query(String.Format("SELECT * FROM videos WHERE id = '{0}'", id));
-        instantiate(ds);
-        return ds;
+        return query(String.Format("SELECT * FROM video WHERE id = '{0}'", id));
+    }
+
+    public static Videos loadObjectById(int id)
+    {
+        return instantiate(query(String.Format("SELECT * FROM video WHERE id = '{0}'", id)));
     }
 
     public static int countAll()
     {
-        return Convert.ToInt16(query("SELECT COUNT(*) FROM videos").Tables[0].Rows[0][0]);
+        return Convert.ToInt16(query("SELECT COUNT(*) FROM video").Tables[0].Rows[0][0]);
     }
 
     public static DataSet loadByCauseId(string causeId)
     {
-        return query(String.Format("SELECT * FROM videos WHERE cause_id = {0}", causeId));
+        return query(String.Format("SELECT * FROM video WHERE cause_id = {0}", causeId));
     }
 }

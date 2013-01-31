@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Data;
 
-public class Person : DatabaseObject
+public class Persons : DatabaseObject
 {
     public int Id { set; get; }
     public string Name { set; get; }
@@ -13,9 +13,9 @@ public class Person : DatabaseObject
     public string Description { set; get; }
     public int UserId { set; get; }
 
-    private static Person instantiate(DataSet ds)
+    private static Persons instantiate(DataSet ds)
     {
-        Person p = new Person();
+        Persons p = new Persons();
 
         p.Id = Convert.ToInt16(ds.Tables[0].Rows[0]["id"]);
         p.Name = ds.Tables[0].Rows[0]["name"].ToString();
@@ -29,7 +29,7 @@ public class Person : DatabaseObject
 
     public void insert()
     {
-        insert(String.Format("INSERT INTO Person VALUES ('{0}', '{1}', '{2}', '{3}', '{4}')", UserId, Name, Surname, Age, Description));
+        insert(String.Format("INSERT INTO person VALUES ('{0}', '{1}', '{2}', '{3}', '{4}')", UserId, Name, Surname, Age, Description));
     }
 
     public void update()
@@ -47,11 +47,14 @@ public class Person : DatabaseObject
         return query("SELECT * FROM person");
     }
 
-    public static DataSet loadById(int id)
+    public static DataSet loadDataSetById(int id)
     {
-        DataSet ds = query(String.Format("SELECT * FROM users WHERE id = '{0}'", id));
-        instantiate(ds);
-        return ds;
+        return query(String.Format("SELECT * FROM person WHERE id = '{0}'", id));
+    }
+
+    public static Persons loadObjectById(int id)
+    {
+        return instantiate(query(String.Format("SELECT * FROM person WHERE id = '{0}'", id)));
     }
 
     public static int countAll()

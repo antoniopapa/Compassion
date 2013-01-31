@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Data;
 
-public class Organization : DatabaseObject
+public class Organizations : DatabaseObject
 {
     public int Id { set; get; }
     public string Name { set; get; }
@@ -12,15 +12,15 @@ public class Organization : DatabaseObject
     public string Description { set; get; }
     public int UserId { set; get; }
 
-    private static Organization instantiate(DataSet ds)
+    private static Organizations instantiate(DataSet ds)
     {
-        Organization o = new Organization();
+        Organizations o = new Organizations();
 
-        o.Id = Convert.ToInt16(ds.Tables[0].Rows[0]["id"]);
-        o.Name = ds.Tables[0].Rows[0]["name"].ToString();
-        o.Website = ds.Tables[0].Rows[0]["website"].ToString();
-        o.UserId = Convert.ToInt16(ds.Tables[0].Rows[0]["user_id"]);
-        o.Description = ds.Tables[0].Rows[0]["description"].ToString();
+            o.Id = Convert.ToInt16(ds.Tables[0].Rows[0]["id"]);
+            o.Name = ds.Tables[0].Rows[0]["name"].ToString();
+            o.Website = ds.Tables[0].Rows[0]["website"].ToString();
+            o.UserId = Convert.ToInt16(ds.Tables[0].Rows[0]["user_id"]);
+            o.Description = ds.Tables[0].Rows[0]["description"].ToString();
 
         return o;
     }
@@ -45,11 +45,14 @@ public class Organization : DatabaseObject
         return query("SELECT * FROM organization");
     }
 
-    public static DataSet loadById(int id)
+    public static DataSet loadDataSetById(int id)
     {
-        DataSet ds = query(String.Format("SELECT * FROM users WHERE id = '{0}'", id));
-        instantiate(ds);
-        return ds;
+        return query(String.Format("SELECT * FROM organization WHERE id = '{0}'", id));
+    }
+
+    public static Organizations loadObjectById(int id)
+    {
+        return instantiate(query(String.Format("SELECT * FROM organization WHERE id = '{0}'", id)));
     }
 
     public static int countAll()

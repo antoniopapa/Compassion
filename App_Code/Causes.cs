@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Data;
 
-public class Causes: DatabaseObject
+public class Causes : DatabaseObject
 {
     public int Id { set; get; }
     public int UserId { set; get; }
@@ -59,11 +59,14 @@ public class Causes: DatabaseObject
         return query("SELECT * FROM causes");
     }
 
-    public static DataSet loadById(int id)
+    public static DataSet loadDataSetById(int id)
     {
-        DataSet ds = query(String.Format("SELECT * FROM causes WHERE id = '{0}'", id));
-        instantiate(ds);
-        return ds;
+        return query(String.Format("SELECT * FROM causes WHERE id = '{0}'", id));
+    }
+
+    public static Causes loadObjectById(int id)
+    {
+        return instantiate(query(String.Format("SELECT * FROM causes WHERE id = '{0}'", id)));
     }
 
     public static int countAll()
@@ -71,16 +74,44 @@ public class Causes: DatabaseObject
         return Convert.ToInt16(query("SELECT COUNT(*) FROM causes").Tables[0].Rows[0][0]);
     }
 
-    public static DataSet getShortDescriptionCauses()
+    public static DataSet getShortDescriptionCausesBySearch(string search)
+    {
+        search = search.Trim();
+        return query("SELECT causes.id, causes.title, causes.description, causes.latitude, causes.longitude, " +
+                        " CASE WHEN users.type = 0 " +
+                        " THEN person.name + ' ' + person.surname " +
+                        " ELSE organization.name END AS 'name' " +
+                        " FROM causes " +
+                        " LEFT JOIN users ON users.id = causes.user_id " +
+                        " LEFT JOIN person ON person.user_id = causes.user_id " +
+                        " LEFT JOIN organization ON organization.user_id = causes.user_id" +
+                        " WHERE causes.active = 1 AND (" +
+                                            " causes.address LIKE '%" + search + "%' OR" +
+                                            " causes.description LIKE '%" + search + "%' OR" +
+                                            " causes.story LIKE '%" + search + "%' OR" +
+                                            " causes.title LIKE '%" + search + "%' OR" +
+                                            " users.city LIKE '%" + search + "%' OR" +
+                                            " users.country LIKE '%" + search + "%' OR" +
+                                            " person.name LIKE '%" + search + "%' OR" +
+                                            " person.surname LIKE '%" + search + "%' OR" +
+                                            " person.description LIKE '%" + search + "%' OR" +
+                                            " organization.name LIKE '%" + search + "%' OR" +
+                                            " organization.description LIKE '%" + search + "%' OR" +
+                                            " organization.website LIKE '%" + search + "%'" +
+                        ") ORDER BY causes.need DESC");
+    }
+
+    public static DataSet getMapCauses()
     {
         return query("SELECT causes.id, causes.title, causes.description, causes.latitude, causes.longitude, " +
                         " CASE WHEN users.type = 0 " +
-		                " THEN person.name + ' ' + person.surname " +
-		                " ELSE organization.name END AS 'name' " +
-                        " FROM causes " + 
+                        " THEN person.name + ' ' + person.surname " +
+                        " ELSE organization.name END AS 'name' " +
+                        " FROM causes " +
                         " LEFT JOIN users ON users.id = causes.user_id " +
                         " LEFT JOIN person ON person.user_id = causes.user_id " +
-                        " LEFT JOIN organization ON organization.user_id = causes.user_id" + 
-                        " WHERE causes.active = 1");
+                        " LEFT JOIN organization ON organization.user_id = causes.user_id" +
+                        " WHERE causes.active = 1 ORDER BY causes.need DESC");
     }
+
 }

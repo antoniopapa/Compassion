@@ -47,11 +47,14 @@ public class Images : DatabaseObject
         return query("SELECT * FROM images");
     }
 
-    public static DataSet loadById(int id)
+    public static DataSet loadDataSetById(int id)
     {
-        DataSet ds = query(String.Format("SELECT * FROM images WHERE id = '{0}'", id));
-        instantiate(ds);
-        return ds;
+        return query(String.Format("SELECT * FROM images WHERE id = '{0}'", id));
+    }
+
+    public static Images loadObjectById(int id)
+    {
+        return instantiate(query(String.Format("SELECT * FROM images WHERE id = '{0}'", id)));
     }
 
     public static int countAll()
@@ -77,7 +80,8 @@ public class Images : DatabaseObject
         DataSet ds = query(String.Format("SELECT * FROM images WHERE cause_id = {0} AND profile = 1", causeId));
         if (ds.Tables[0].Rows.Count > 0)
         {
-            return ds.Tables[0].Rows[0]["path"].ToString() + ds.Tables[0].Rows[0]["name"].ToString();
+            string r = ds.Tables[0].Rows[0]["path"].ToString() + ds.Tables[0].Rows[0]["name"].ToString();
+            return r;
         }
 
         return getRandomImagePath();

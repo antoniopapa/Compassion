@@ -9,8 +9,8 @@ var sidebar_width       = 350;    // width of the full sidebar.
 
 // Sets sidebar to default position.
 $(function () {
-    $("#sidebar").css("width", sidebar_width);
-    $("#sidebar").animate({ left: ($(window).width() - sidebar_visible) }, sidebar_active_t , 'swing');
+    $("#sidebar").css("width", sidebar_width); 
+    $("#sidebar").animate({ left: ($(window).width() - sidebar_visible) }, sidebar_active_t, 'swing');
 });
 
 
@@ -23,7 +23,7 @@ $(function () {
     }, function () {
         // hoverOut
         var t = setTimeout(function () {
-         //   $("#sidebar").animate({ left: ($(window).width() - sidebar_visible) }, sidebar_inactive_t, 'swing');
+            $("#sidebar").animate({ left: ($(window).width() - sidebar_visible) }, sidebar_inactive_t, 'swing');
         }, sidebar_timeout);
         $(this).data('timeout', t);
        });
@@ -66,19 +66,148 @@ createItem("#item-login", "#479", "#58f");
 createItem("#item-banner", "#990", "#bb0");
 createItem("#item-add", "#990", "#bb0");
 createItem("#item-delete", "#099", "#0aa");
+createItem("#item-map", "#009", "#00b");
+
+
+// Ajax Requests
+
+var timer_fadein = 800;
+var timer_fadeout = 400;
+var ajaxTimeout = 1200;
+
+function ItemAjaxRequest(itemname, url,complete)
+{
+    $(itemname).click(function () {
+        $("#content").fadeOut( timer_fadeout, function () {
+            $("#content").empty();
+            $("#content").fadeIn(timer_fadein);
+            $("#content").append('<img src="imgs/ajax-loader.gif" id="ajaxgif" />');
+            setTimeout(function () {
+                $("#content").hide();
+                $("#content").load(url + " #cont", function () {
+                    $("#content").fadeIn(timer_fadein);
+                    //clearTimeout();
+                    setTimeout(complete(),timer_fadein + 500);
+                });
+            },ajaxTimeout);
+        });
+    });
+}
+
+
+function implementButtons()
+{
+    /////////////////////
+    $("#login-button").click(function () {
+        $("#content").fadeOut(timer_fadeout, function () {
+            $("#content").empty();
+            $("#content").fadeIn(timer_fadein);
+            $("#content").append('<img src="imgs/ajax-loader.gif" id="ajaxgif" />');
+            setTimeout(function () {
+                $("#content").hide();
+                $("#content").load("./pages/login.aspx" + " #cont", function () {
+                    $("#content").fadeIn(timer_fadein);
+                    //clearTimeout();
+                    setTimeout(afterreq(), timer_fadein + 500);
+                });
+            }, ajaxTimeout);
+        });
+    });
+    //////////////
+    $("#logout-button").click(function () {
+        $.ajax({
+            url: "./proc/logout.aspx",
+            type: "get"
+        });
+
+        refreshHeader();
+    });
+}
+
+function refreshHeader()
+{
+    //$("#header-cont").slideUp(timer_fadeout, function () {
+   // $("#header-cont").css({ "top": "" });
+    $("#header-cont").animate( { "bottom" : 201}, function() {
+        $("#header-cont").empty();
+        setTimeout(function () {
+
+            $("#header-cont").load("pages/header.aspx .cont", function () {
+                //  $("#header-cont").slideDown(timer_fadein);
+                implementButtons();
+                $("#header-cont").animate({ "bottom": "-15px" }, 400);           
+              //  $("#header-cont").css({ "top": "10px" });
+            });
+        }, ajaxTimeout);
+    });
+}
+
+// Sets header ready
+$(function () {
+    $("#header-cont").load("pages/header.aspx .cont", function () {
+ implementButtons();
+    });
+   
+  //  refreshHeader();
+});
+
+
+function afterreq()
+{
+  //  alert("hi");
+    $("#form-login").submit(function (event) {
+        // alert("sdfsdf");
+      
+   //     $("#form-login input").css("padding", 77);
+
+        var username = $("#input-username").val();
+        var password = $("#input-password").val();
+
+        var request = $.ajax({
+            url: "proc/login.aspx?id=7",
+            type: "post",
+            data: { "name": username, "pass": password }
+        });
+
+        request.done(function (response, textStatus, jqXHR) {
+            console.log(response);
+            if (response == "Error")
+                alert("Username pr Password is incorrect");
+            else {
+                refreshHeader();
+                afterlogin();
+                   }
+
+        });
+
+
+         event.preventDefault();
+        
+
+    });
+}
+
+function afterlogin() {
+
+    $("#content").fadeOut(timer_fadeout, function () {
+        $("#content").empty();
+        $("#content").fadeIn(timer_fadein);
+        $("#content").append('<img src="imgs/ajax-loader.gif" id="ajaxgif" />');
+        setTimeout(function () {
+            $("#content").hide();
+            $("#content").load("./pages/map.aspx" + " #cont", function () {
+                $("#content").fadeIn(timer_fadein);
+                //clearTimeout();
+                load_the_map();
+            });
+        }, ajaxTimeout);
+    });
+}
+
+
+
 
 $(function () {
-
-    $("#item-about-sub").hide();
-
-    $("#item-about").click(function () {
-        $("#item-about-sub").slideDown();
-        $("item-about").css("background-color", "#777");
-    });
-
-    $("#item-login").click(function () {
-        $("#content").load("/pages/login.aspx");
-        alert("sdfs");
-    });
-
+      ItemAjaxRequest("#item-login", "pages/login.aspx",afterreq);
+      ItemAjaxRequest("#item-map", "pages/map.aspx", load_the_map);
 });

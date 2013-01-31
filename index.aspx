@@ -7,12 +7,13 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     <link href="css/style.css" rel="Stylesheet" />
     <script type="text/javascript" src="javascript/jquery-1.8.3.min.js"></script>
+    <script src="javascript/jquery.livequery.js" type="text/javascript"></script>
     <script type="text/javascript" src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0"></script>
-    <script type="text/javascript" src="javascript/javascript.js"></script>
+    <script src="javascript/BingMap.js" type="text/javascript"></script>
+    <script type="text/javascript" src="javascript/init.js"></script>
     <script type="text/javascript" src="javascript/navigation.js"></script>
     <script type="text/javascript" src="javascript/jquery-ui-1.10.0.custom.min.js"></script>
 </head>
-
 <body>
 
     <form id="form" runat="server">
@@ -42,6 +43,10 @@
                 <img src="imgs/icons/About.png" />
                 <span>About</span>
             </div>
+             <div class="menu-item" id="item-map">
+                <img src="imgs/icons/Map and Location.png" />
+                <span>Map</span>
+            </div>
             <div class="menu-item" id="item-bug" >
                 <img src="imgs/icons/Ant.png" />
                 <span>Report bug</span>
@@ -57,10 +62,15 @@
     <div id="container" >
 
         <div id="header" >
+            <div id="header-cont" >
+
+            </div>
         </div>
 
         <div id ="content" >
+            <div id="cont">
             <div id="mapDiv" style="position: relative; width: 100%; height: 100%;"> </div>    
+                </div>
         </div>
     </div>
 </body>

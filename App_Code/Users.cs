@@ -53,15 +53,27 @@ public class Users : DatabaseObject
         return query("SELECT * FROM users");
     }
 
-    public static DataSet loadById(int id)
+    public static DataSet loadDataSetById(int id)
     {
-        DataSet ds = query(String.Format("SELECT * FROM users WHERE id = '{0}'", id));
-        instantiate(ds);
-        return ds;
+        return query(String.Format("SELECT * FROM users WHERE id = '{0}'", id));  
+    }
+
+    public static Users loadObjectById(int id)
+    {
+        return instantiate(query(String.Format("SELECT * FROM users WHERE id = '{0}'", id)));
     }
 
     public static int countAll()
     {
         return Convert.ToInt16(query("SELECT COUNT(*) FROM users").Tables[0].Rows[0][0]);
+    }
+
+    public static Users checkExixts(string email, string password)
+    {
+        DataSet ds = query(String.Format("SELECT * FROM users WHERE email = '{0}' and password = '{1}'", email, password));
+        if (ds.Tables[0].Rows.Count == 1)
+            return instantiate(ds);
+        else
+            return null;
     }
 }

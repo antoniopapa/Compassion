@@ -123,17 +123,16 @@ header {
     }
 
 
+
+
 #sidebar {
     z-index: 3;
     position:absolute;
     height:100%;
     min-height:700px;
-    min-width:300px;
-    
+    min-width:300px;  
     float:none;
-  /*  background-image: url("/images/shade.png");
-    background-repeat: repeat; */
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.6);
     left:100%;
 }
 
@@ -172,11 +171,11 @@ html {
     }
 
  .button-metro {
-        background: #f00 url("/imgs/icons/Compassion.png");
+        background: #f00 url("./imgs/icons/Compassion.png");
         background-size: 36px , 36px;
         width: 36px;
         height : 36px;
-        position: absolute;
+        position:absolute;
         left: 250px;
         top: 2px;
         border:none;
@@ -227,24 +226,160 @@ html {
 
     }
 
-#header {
-    background-color: #00ff00;
-    height: 150px;
-    width: 100%;
+
+#cont {
+    height:100%;
+    width:100%;
 }
 
+
 #content {
-   height:80%;
-   min-height:400px;
-   background-color:#808080;
+   height: 80%;
+   display: block;
 }
 
 #container {
-    height:700px;
-    background-color:#f2df6e;
+    height:100%;
+    overflow-y:hidden;
 }
 
 #mapDiv {
    height:100%;
    position:absolute;
 }
+
+#ajaxgif {
+    display:block;
+    top:100px;
+    padding-top:200px;
+    margin:auto;
+    width:50px;
+    height:50px;
+}
+
+#metrobox-login {
+    background-color:#1f5beb;
+    width:450px;
+    height:350px;
+   margin:auto;
+   margin-top:100px;
+}
+
+    #metrobox-login img {
+        width:30px;
+        height:30px;
+        position:absolute;
+    }
+
+#metrobox-login-header {
+    background-color:#34b6ef;
+    padding:5px;
+}
+
+#metrobox-login span {
+    color:white;
+    font-size:25px;
+    bottom:4px;
+    padding-left:40px;
+    padding-top:60px;
+}
+
+#metrobox-login form {
+    margin: auto;
+    color:white;
+    margin-left:50px;
+    margin-top:60px;
+}
+
+#metrobox-login input {
+    margin:10px;
+    padding:5px;
+}
+
+/* Header stuff*/
+
+
+#header {
+   position:relative;
+    height: 200px;
+    width: 100%;
+  
+}
+
+#header-cont {
+  
+     border-bottom-color:black;
+    border-bottom-style:solid;
+    width:100%;
+    height:100%;
+    position:absolute;
+   bottom: -15px;
+}
+
+#header-cont .cont img {
+    width:120px;
+    height:120px;
+    margin: 10px;
+    background-color: #808080;
+    float:left;
+}
+
+#header #message {
+    float:left;
+}
+
+#header #message p {
+    color: #808080;
+    font-size:18px;
+}
+
+#header #message h3 {
+    font-size: 60px;
+    padding-top: 4px;
+}
+
+#header #message #login-button {
+    height:30px;
+    width:100px;
+    background:#34b6ef  url("./imgs/icons/Login3.png");
+    background-size: 30px;
+    background-repeat:no-repeat;
+    display:block;
+    float:left;
+    margin: 10px;
+    color:white;
+    font-size:25px;
+    padding-left:35px;
+    cursor:pointer;
+}
+
+#header #message #register-button {
+    height:30px;
+    width:100px;
+    background: #00ff00  url("./imgs/icons/Data.png");
+    background-size: 30px;
+    background-repeat:no-repeat;
+    display:block;
+    float:left;
+    margin: 10px;
+     color:white;
+    font-size:25px;
+    padding-left:35px;
+    cursor:pointer;
+}
+
+#header #message #logout-button {
+    height:30px;
+    width:100px;
+    background: #1f5beb  url("./imgs/icons/Login door.png");
+    background-size: 30px;
+    background-repeat:no-repeat;
+    display:block;
+    float:left;
+    margin: 10px;
+     color:white;
+    font-size:25px;
+    padding-left:35px;
+    cursor:pointer;
+}
+
